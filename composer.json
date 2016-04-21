@@ -1,0 +1,14 @@
+{
+    "name": "10up/async-transients",
+    "description": "Transients, that regenerate asynchronously once content is expired, and serve stale content in the mean time",
+    "type": "wordpress-library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "10up",
+            "homepage": "http://10up.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
