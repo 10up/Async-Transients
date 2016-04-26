@@ -3,7 +3,7 @@ Async Transients
 
 Transients that serve stale data while regenerating the new transients in the background. 
 
-Requires support for fastcgi_finish_request, or else transients will regenerate expired data immediately.
+Requires support for `fastcgi_finish_request`, or else transients will regenerate expired data immediately.
 
 ## Background & Purpose
 
