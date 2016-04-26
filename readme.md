@@ -34,6 +34,7 @@ function get_data_from_api( $user_id ) {
 // This would very likely not be hardcoded...
 $user_id = 1;
 
+// If the transient is expired get_data_from_api() is called, with $user_id as a parameter
 $transient_value = \TenUp\AsyncTransients\get_async_transient( 'transient-key-' . $user_id, 'get_data_from_api', array( $user_id ) );
 
 // Outputs the value stored in the transient
