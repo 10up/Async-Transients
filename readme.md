@@ -16,7 +16,31 @@ library is set up to use composer's autoloader, so make to you are loading your 
 
 ## Usage
 
+Usage is similar to standard WordPress transient functions, in that you provide a transient key and an expiration time,
+but its different in that you must also provide a callback function, as well as any (optional) parameters to pass to the
+callback function, that should be called to regenerate the transient data if it is expired.
 
+Example Usage:
+
+```php
+// Function to regenerate expired transient
+function get_data_from_api( $user_id ) {
+	// Fake function, that we assume is really time consuming to run
+	$my_result = get_api_data_for_user( $user_id );
+
+	\TenUp\AsyncTransients\set_async_transient( 'transient-key-' . $user_id, $my_result, MINUTE_IN_SECONDS );
+}
+
+// This would very likely not be hardcoded...
+$user_id = 1;
+
+$transient_value = \TenUp\AsyncTransients\get_async_transient( 'transient-key-' . $user_id, 'get_data_from_api', array( $user_id ) );
+
+// Outputs the value stored in the transient
+// If the transient is expired, it will still show the last known data, while queueing the transient to be updated behind the scenes.
+var_dump( $transient_value );
+
+```
 
 ## Issues
 
