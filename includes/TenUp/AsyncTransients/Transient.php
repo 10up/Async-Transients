@@ -2,12 +2,38 @@
 
 namespace TenUp\AsyncTransients;
 
+/**
+ * Implementation of async transients for WordPress. If transients are expired, stale data is served, and the transient
+ * is queued up to be regenerated on shutdown.
+ *
+ * Class Transient
+ *
+ * @package TenUp\AsyncTransients
+ */
 class Transient {
 
+	/**
+	 * Instance of this class, initiated by ::instance()
+	 *
+	 * @var Transient
+	 */
 	protected static $_instance;
 
+	/**
+	 * Array of callbacks to be processed on shutdown.
+	 *
+	 * @var array
+	 */
 	protected $queue;
 
+	/**
+	 * Returns the only instance of the Transient class
+	 *
+	 * We can only have one instance of this, so that we don't have multiple diverging queues of callbacks to process
+	 * on the shutdown hook.
+	 *
+	 * @return Transient
+	 */
 	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new static();
@@ -21,12 +47,18 @@ class Transient {
 		$this->queue = array();
 	}
 
+	/**
+	 * Sets up required event hooks for the plugin.
+	 */
 	public function setup() {
 		add_action( 'shutdown', array( $this, 'finish_request' ), 100 );
 	}
 
 	/**
-	 * If using fastcgi, close the request to the browser and process all the queued transient regeneration callbacks
+	 * Runs all the transient regeneration callbacks after closing the connection to the browser.
+	 *
+	 * If `fastcgi_finish_request` is not available, the function immediately returns. There will be no queued callbacks
+	 * in this instance, since the ->add_to_queue() method will process the callback immediately in those cases.
 	 */
 	public function finish_request() {
 		// Bail if we don't have fastcgi_finish_request
@@ -46,6 +78,13 @@ class Transient {
 		exit;
 	}
 
+	/**
+	 * Deletes a given transient
+	 *
+	 * @param string $transient The key for the transient to delete
+	 *
+	 * @return bool Result of delete_option
+	 */
 	public function delete( $transient ) {
 		$option_timeout = '_async_transient_timeout_' . $transient;
 		$option = '_async_transient_' . $transient;
@@ -57,6 +96,15 @@ class Transient {
 		return $result;
 	}
 
+	/**
+	 * Returns the value of an async transient.
+	 *
+	 * @param string $transient The key of the transient to return
+	 * @param Callable $regenerate_function The function to call to regenerate the transient when it is expired
+	 * @param array $regenerate_params Array of parameters to pass to the callback when regenerating the transient.
+	 *
+	 * @return mixed|void
+	 */
 	public function get( $transient, $regenerate_function, $regenerate_params = array() ) {
 		$regenerate = false;
 		$transient_option = '_async_transient_' . $transient;
@@ -85,6 +133,15 @@ class Transient {
 		return $value;
 	}
 
+	/**
+	 * Set the value of an async transient.
+	 *
+	 * @param string $transient Unique key for the transient
+	 * @param mixed $value The value to store for the transient
+	 * @param int $expiration Number of seconds until the transient should be considered expired.
+	 *
+	 * @return bool
+	 */
 	public function set( $transient, $value, $expiration ) {
 		$expiration = (int) $expiration;
 
@@ -119,7 +176,15 @@ class Transient {
 		return $result;
 	}
 
-	public function add_to_queue( $function, $params_array ) {
+	/**
+	 * Adds a callback function to the queue of callbacks to be run on shutdown.
+	 *
+	 * If `fastcgi_finish_request` is unavailable, the callback is called immediately.
+	 *
+	 * @param Callable $function
+	 * @param array $params_array
+	 */
+	public function add_to_queue( $function, $params_array = array() ) {
 		if ( function_exists( 'fastcgi_finish_request' ) ) {
 			/*
 			 * Generates a unique hash of the function + params, to make sure we only process a callback for one
