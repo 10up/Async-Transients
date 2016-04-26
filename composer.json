@@ -10,5 +10,10 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "TenUp\\AsyncTransients\\": "includes/TenUp/AsyncTransients"
+        }
+    }
 }
