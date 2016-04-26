@@ -11,7 +11,8 @@ Transients are great for storing data that is expensive to regenerate, but we st
 
 ## Installation
 
-
+This library is meant to be included with composer. To install, run `composer require 10up/async-transients`. The
+library is set up to use composer's autoloader, so make to you are loading your `vendor/autoload.php` file.
 
 ## Usage
 
