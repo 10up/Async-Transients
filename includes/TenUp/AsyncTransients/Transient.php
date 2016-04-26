@@ -121,8 +121,15 @@ class Transient {
 
 	public function add_to_queue( $function, $params_array ) {
 		if ( function_exists( 'fastcgi_finish_request' ) ) {
-			// Make sure this is unique
-			$hash = md5( $function . json_encode( $params_array ) );
+			/*
+			 * Generates a unique hash of the function + params, to make sure we only process a callback for one
+			 * combination even if it is accidentally added multiple times in a request for the same set of data
+			 *
+			 * spl_object_hash, in case a closure is passed, instead of a function name
+			 * json_encode takes care of the cases where an array or string is provided
+			 */
+			$function_hash = is_object( $function ) ? spl_object_hash( $function ) : json_encode( $function );
+			$hash = md5( $function_hash . json_encode( $params_array ) );
 			if ( ! isset( $this->queue[ $hash ] ) ) {
 				$this->queue[ $hash ] = array(
 					'function' => $function,
