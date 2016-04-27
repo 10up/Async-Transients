@@ -1,7 +1,7 @@
 Async Transients
 ================
 
-Transients that serve stale data while regenerating the new transients in the background. 
+Transients that serve stale data while regenerating the new transients in the background.
 
 Requires support for `fastcgi_finish_request`, or else transients will regenerate expired data immediately.
 
@@ -42,6 +42,24 @@ $transient_value = \TenUp\AsyncTransients\get_async_transient( 'transient-key-' 
 var_dump( $transient_value );
 
 ```
+
+## How
+
+How does all of this work?
+
+First, when calling `get_async_transient`, you now have to pass a callback function, and optionally, any parameters to
+pass to the callback function. The transient is then retrieved, much like how WordPress core would retrieve it, but
+with a key difference. Instead of returning nothing if the transient is expired, we return the last known value, and
+add the callback function and params to a queue, to process later. By the end of the request, we have a queue of that
+contains callback functions for all transients that were accessed, that had expired data.
+
+Next, we hook into the WordPress `shutdown` action. The `shutdown` action runs just before PHP shuts down execution. The
+Transient class hooks into that action, and calls the [`fastcgi_finish_request` function](http://php.net/manual/en/function.fastcgi-finish-request.php), if it is available.
+That function flushes all response data to the client, and as far as the browser is concerned, the request is done,
+however, php is allowed to keep running in the background.
+
+At this point, we iterate over all the callback functions in the queue, which then regenerate any transient data
+that was accessed, but was expired.
 
 ## Issues
 
