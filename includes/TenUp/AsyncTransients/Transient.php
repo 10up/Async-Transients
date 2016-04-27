@@ -74,8 +74,6 @@ class Transient {
 		foreach( $this->queue as $item ) {
 			call_user_func_array( $item['function'], $item['params'] );
 		}
-
-		exit;
 	}
 
 	/**
