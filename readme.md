@@ -5,6 +5,10 @@ Transients that serve stale data while regenerating the new transients in the ba
 
 Requires support for `fastcgi_finish_request`, or else transients will regenerate expired data immediately.
 
+<p align="center">
+<a href="http://10up.com/contact/"><img src="https://10updotcom-wpengine.s3.amazonaws.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
+</p>
+
 ## Background & Purpose
 
 Transients are great for storing data that is expensive to regenerate, but we still run in to the problem of needing to regenerate that data synchronously once the transient expires. This library solves that problem by serving stale data once the transient is expired, and processing the regenerate callback after the request has finished, so that end users never see the impact of regenerating transients.
