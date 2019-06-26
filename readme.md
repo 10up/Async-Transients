@@ -2,7 +2,7 @@
 
 > Transients that serve stale data while regenerating the new transients in the background.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![MIT License](https://img.shields.io/github/license/10up/Async-Transients.svg)](https://github.com/10up/Async-Transients/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/tag/10up/Async-Transients.svg?label=release)](https://github.com/10up/Async-Transients/releases/latest) [![MIT License](https://img.shields.io/github/license/10up/Async-Transients.svg)](https://github.com/10up/Async-Transients/blob/develop/LICENSE.md)
 
 ## Background & Purpose
 
