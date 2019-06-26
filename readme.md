@@ -2,7 +2,7 @@
 
 > Transients that serve stale data while regenerating the new transients in the background.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![MIT License](https://img.shields.io/github/license/10up/Async-Transients.svg)](https://github.com/10up/Async-Transients/blob/develop/LICENSE.md)
 
 ## Background & Purpose
 
@@ -65,10 +65,6 @@ that was accessed, but was expired.
 ## Issues
 
 If you identify any errors or have an idea for improving the plugin, please [open an issue](https://github.com/10up/Async-Transients/issues). We're excited to see what the community thinks of this project, and we would love your input!
-
-## License
-
-Async Transients is free software; you can redistribute it and/or modify it under the terms of the MIT License.
 
 ## Support Level
 
