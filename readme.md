@@ -2,7 +2,7 @@
 
 > Transients that serve stale data while regenerating the new transients in the background.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/tag/10up/Async-Transients.svg?label=release)](https://github.com/10up/Async-Transients/releases/latest) [![MIT License](https://img.shields.io/github/license/10up/Async-Transients.svg)](https://github.com/10up/Async-Transients/blob/develop/LICENSE.md)
+[![Support Level](https://img.shields.io/badge/support-stable-blue.svg)](#support-level) [![Release Version](https://img.shields.io/github/tag/10up/Async-Transients.svg?label=release)](https://github.com/10up/Async-Transients/releases/latest) [![MIT License](https://img.shields.io/github/license/10up/Async-Transients.svg)](https://github.com/10up/Async-Transients/blob/develop/LICENSE.md)
 
 ## Background & Purpose
 
@@ -68,7 +68,7 @@ If you identify any errors or have an idea for improving the plugin, please [ope
 
 ## Support Level
 
-**Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
+**Stable:** 10up is not planning to develop any new features for this, but will still respond to bug reports and security concerns.  We welcome PRs, but any that include new features should be small and easy to integrate and should not include breaking changes.  We otherwise intend to keep this tested up to the most recent version of WordPress.
 
 ## Like what you see?
 
