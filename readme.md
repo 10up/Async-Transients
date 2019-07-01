@@ -1,17 +1,16 @@
-Async Transients
-================
+# Async Transients
 
-Transients that serve stale data while regenerating the new transients in the background.
+> Transients that serve stale data while regenerating the new transients in the background.
 
-Requires support for `fastcgi_finish_request`, or else transients will regenerate expired data immediately.
-
-<p align="center">
-<a href="http://10up.com/contact/"><img src="https://10updotcom-wpengine.s3.amazonaws.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
-</p>
+[![Support Level](https://img.shields.io/badge/support-stable-blue.svg)](#support-level) [![Release Version](https://img.shields.io/github/tag/10up/Async-Transients.svg?label=release)](https://github.com/10up/Async-Transients/releases/latest) [![MIT License](https://img.shields.io/github/license/10up/Async-Transients.svg)](https://github.com/10up/Async-Transients/blob/develop/LICENSE.md)
 
 ## Background & Purpose
 
 Transients are great for storing data that is expensive to regenerate, but we still run in to the problem of needing to regenerate that data synchronously once the transient expires. This library solves that problem by serving stale data once the transient is expired, and processing the regenerate callback after the request has finished, so that end users never see the impact of regenerating transients.
+
+## Requirements
+
+Requires support for `fastcgi_finish_request`, or else transients will regenerate expired data immediately.
 
 ## Installation
 
@@ -47,9 +46,7 @@ var_dump( $transient_value );
 
 ```
 
-## How
-
-How does all of this work?
+## How does all of this work?
 
 First, when calling `get_async_transient`, you now have to pass a callback function, and optionally, any parameters to
 pass to the callback function. The transient is then retrieved, much like how WordPress core would retrieve it, but
@@ -69,6 +66,12 @@ that was accessed, but was expired.
 
 If you identify any errors or have an idea for improving the plugin, please [open an issue](https://github.com/10up/Async-Transients/issues). We're excited to see what the community thinks of this project, and we would love your input!
 
-## License
+## Support Level
 
-Async Transients is free software; you can redistribute it and/or modify it under the terms of the MIT License.
+**Stable:** 10up is not planning to develop any new features for this, but will still respond to bug reports and security concerns.  We welcome PRs, but any that include new features should be small and easy to integrate and should not include breaking changes.  We otherwise intend to keep this tested up to the most recent version of WordPress.
+
+## Like what you see?
+
+<p align="center">
+<a href="http://10up.com/contact/"><img src="https://10updotcom-wpengine.s3.amazonaws.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
+</p>
