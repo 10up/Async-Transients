@@ -16,5 +16,6 @@
             "TenUp\\AsyncTransients\\": "includes/TenUp/AsyncTransients"
         },
         "files": [ "includes/helpers.php" ]
-    }
+    },
+    "abandoned": true
 }
